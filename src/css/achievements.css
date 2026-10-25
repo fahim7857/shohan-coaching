@@ -1,0 +1,20 @@
+/* Shohan's Coaching Kushtia - Achievements Page Styles */
+
+.student-success-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.student-success-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 28px -6px rgba(11, 29, 58, 0.12);
+}
+
+.student-success-card:hover img {
+  transform: scale(1.03);
+}
+
+.search-input-focus:focus-within {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}

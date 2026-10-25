@@ -1,0 +1,24 @@
+/* Shohan's Coaching Kushtia - About Page Styles */
+
+.facility-card-image {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.facility-card-image:hover {
+  transform: scale(1.04);
+}
+
+.single-branch-banner {
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.9) 0%, rgba(253, 230, 138, 0.8) 100%);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.core-principle-card {
+  transition: all 0.25s ease;
+}
+
+.core-principle-card:hover {
+  transform: translateY(-3px);
+  border-color: #0284c7;
+  box-shadow: 0 10px 20px -3px rgba(2, 132, 199, 0.08);
+}

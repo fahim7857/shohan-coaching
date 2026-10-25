@@ -1,0 +1,25 @@
+/* Shohan's Coaching Kushtia - Teachers Page Styles */
+
+.teacher-profile-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.teacher-profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 28px -6px rgba(11, 29, 58, 0.12);
+}
+
+.teacher-profile-card:hover img {
+  transform: scale(1.03);
+}
+
+.faculty-tab-btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.faculty-field-label {
+  color: #1e293b;
+  font-weight: 700;
+  flex-shrink: 0;
+}

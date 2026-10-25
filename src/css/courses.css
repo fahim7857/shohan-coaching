@@ -1,0 +1,35 @@
+/* Shohan's Coaching Kushtia - Courses Page Styles */
+
+.course-program-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.course-program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px -6px rgba(11, 29, 58, 0.12);
+}
+
+.course-program-card:hover .course-badge {
+  transform: scale(1.08);
+}
+
+.course-badge {
+  transition: transform 0.3s ease;
+}
+
+/* Modal animation */
+#modal-course-details:not(.hidden) {
+  animation: fadeInModal 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

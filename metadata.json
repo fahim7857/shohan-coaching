@@ -1,0 +1,6 @@
+{
+  "name": "Shohan's Varsity Admission Coaching Kushtia",
+  "description": "কুষ্টিয়ায় বিশ্ববিদ্যালয়, মেডিকেল ও ইঞ্জিনিয়ারিং ভর্তি প্রস্তুতির শীর্ষ প্রতিষ্ঠান - সোহান'স ভার্সিটি অ্যাডমিশন কোচিং কুষ্টিয়া।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

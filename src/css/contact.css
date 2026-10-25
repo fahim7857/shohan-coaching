@@ -1,0 +1,38 @@
+/* Shohan's Coaching Kushtia - Contact & Admission Page Styles */
+
+.inquiry-input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inquiry-input:focus {
+  outline: none;
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.faq-item {
+  transition: border-color 0.2s ease;
+}
+
+.faq-item:hover {
+  border-color: #93c5fd;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-slip, #printable-slip * {
+    visibility: visible;
+  }
+  #printable-slip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    border: none;
+    box-shadow: none;
+  }
+}

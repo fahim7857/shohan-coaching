@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --font-bn: 'Hind Siliguri', sans-serif;
+  --font-sans: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+  --color-brand-navy: #0b1d3a;
+  --color-brand-dark: #071224;
+  --color-brand-blue: #0284c7;
+  --color-brand-cyan: #0ea5e9;
+  --color-brand-red: #e11d48;
+  --color-brand-crimson: #dc2626;
+  --color-brand-accent: #38bdf8;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+}
+
+.font-bn {
+  font-family: 'Hind Siliguri', sans-serif;
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, rgba(7, 18, 36, 0.94) 0%, rgba(11, 29, 58, 0.88) 60%, rgba(14, 165, 233, 0.75) 100%);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
