@@ -23,10 +23,21 @@ export default defineConfig(() => {
           achievements: path.resolve(__dirname, 'achievements.html'),
           gallery: path.resolve(__dirname, 'gallery.html'),
           contact: path.resolve(__dirname, 'contact.html'),
+          admin: path.resolve(__dirname, 'admin.html'),
         },
       },
     },
     server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+        },
+        '/uploads': {
+          target: 'http://localhost:5000',
+          changeOrigin: true,
+        },
+      },
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modify—file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',

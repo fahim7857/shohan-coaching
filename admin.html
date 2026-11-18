@@ -1,0 +1,622 @@
+<!doctype html>
+<html lang="bn" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Crucial Security: Prevent search engine indexing of the Admin Panel -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>অ্যাডমিন প্যানেল - সোহান'স ভার্সিটি অ্যাডমিশন কোচিং কুষ্টিয়া</title>
+
+    <!-- Google Fonts: Hind Siliguri & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind & Site Styles -->
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body class="bg-slate-100 text-slate-800 antialiased font-bn min-h-screen flex flex-col selection:bg-sky-600 selection:text-white">
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-[calc(100%-2rem)] pointer-events-none"></div>
+
+    <!-- ======================================================== -->
+    <!-- 1. LOGIN SCREEN (Visible when not authenticated) -->
+    <!-- ======================================================== -->
+    <div id="login-view" class="flex-1 flex items-center justify-center p-4 sm:p-6 min-h-screen bg-slate-900 hero-gradient">
+      <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden p-6 sm:p-8 animate-fadeIn">
+        <div class="text-center mb-6">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-sky-50 text-sky-600 mb-3 border border-sky-100 shadow-xs">
+            <!-- Lock Icon -->
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold text-[#0b1d3a]">অ্যাডমিন লগইন</h1>
+          <p class="text-slate-500 text-sm mt-1">সোহান'স ভার্সিটি অ্যাডমিশন কোচিং, কুষ্টিয়া</p>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="admin-password" class="block text-sm font-semibold text-slate-700 mb-1.5">
+              অ্যাডমিন পাসওয়ার্ড
+            </label>
+            <div class="relative">
+              <input
+                type="password"
+                id="admin-password"
+                required
+                autocomplete="current-password"
+                placeholder="গোপন পাসওয়ার্ড লিখুন"
+                class="w-full px-4 py-3 min-h-[46px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-2 focus:ring-sky-100 text-slate-800 text-base transition pr-11"
+              />
+              <button
+                type="button"
+                id="toggle-password-visibility"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
+                title="পাসওয়ার্ড দেখুন"
+                aria-label="Toggle password visibility"
+              >
+                <!-- Eye Icon -->
+                <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+              </button>
+            </div>
+            <div id="login-error-msg" class="hidden mt-2 p-3 bg-rose-50 border border-rose-200 text-rose-700 text-xs sm:text-sm rounded-xl font-medium leading-relaxed"></div>
+          </div>
+
+          <button
+            type="submit"
+            id="login-submit-btn"
+            class="w-full min-h-[48px] bg-[#0b1d3a] hover:bg-sky-600 active:scale-[0.98] text-white font-semibold text-base py-3 px-4 rounded-xl transition duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <span id="login-btn-text">প্রবেশ করুন</span>
+            <span id="login-btn-spinner" class="hidden w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+          <a href="/index.html" class="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-600 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+            মূল ওয়েবসাইটে ফিরে যান
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 2. ADMIN DASHBOARD (Visible when authenticated) -->
+    <!-- ======================================================== -->
+    <div id="dashboard-view" class="hidden flex-1 flex flex-col min-h-screen">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="sticky top-0 z-40 bg-[#0b1d3a] text-white shadow-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16 sm:h-20">
+            <!-- Brand / Logo -->
+            <div class="flex items-center gap-3">
+              <a href="/index.html" target="_blank" class="flex items-center gap-2.5 group" title="ওয়েবসাইট দেখুন">
+                <img
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8vEXcKLSLNoNlZL4va51ZV-urS6aO9uxm_48wSBMDdU7PTDa_cVXTh6gFXHAPJg5X9HWW9GZ2YCpSh200Otadm0yjR84dB3XM4OJXyQ60Q_ub3j_i9xaZCSVFspTZtTvdWobIaSYw4j44ljvk2fnAe4L9lsF18kdqWz6die4z4tUwpL4abzuga91YyjSLfcJYgbB36FHRmykBxW-YrPFY3hu5B2oCMZ0FJAC_z-mGhK3aybVItOAxd2DjGWg7Dm27eA"
+                  alt="Shohan's Logo"
+                  class="w-9 h-9 sm:w-11 sm:h-11 object-contain rounded-full bg-white/10 p-0.5 group-hover:scale-105 transition"
+                />
+                <div class="flex flex-col">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-base sm:text-xl text-white tracking-tight leading-none">সোহান'স</span>
+                    <span class="bg-sky-500/20 text-sky-300 border border-sky-400/30 text-[10px] font-sans font-bold px-2 py-0.5 rounded-full uppercase">Admin</span>
+                  </div>
+                  <span class="text-[10px] sm:text-xs text-slate-300 mt-0.5 truncate max-w-[150px] xs:max-w-none">কুষ্টিয়া কেন্দ্রীয় ক্যাম্পাস</span>
+                </div>
+              </a>
+            </div>
+
+            <!-- Right Controls: Public Site Link & Logout -->
+            <div class="flex items-center gap-2 sm:gap-3">
+              <a
+                href="/index.html"
+                target="_blank"
+                class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-200 bg-white/10 hover:bg-white/20 transition cursor-pointer"
+              >
+                <span>ওয়েবসাইট ভিজিট</span>
+                <svg class="w-3.5 h-3.5 text-sky-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+
+              <div class="hidden sm:flex items-center gap-1.5 text-xs text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>সেশন সক্রিয়</span>
+              </div>
+
+              <button
+                type="button"
+                id="logout-btn"
+                class="min-h-[40px] px-3 sm:px-4 py-1.5 rounded-xl bg-rose-600/90 hover:bg-rose-600 active:scale-95 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-xs"
+                title="লগআউট করুন"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                <span>লগআউট</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STICKY TABS BAR -->
+        <div class="bg-[#071224] border-t border-slate-800/80 px-3 sm:px-6 lg:px-8">
+          <div class="max-w-7xl mx-auto flex items-center gap-2 sm:gap-4 overflow-x-auto scrollbar-none py-2">
+            <button
+              type="button"
+              id="tab-btn-teachers"
+              class="admin-tab-btn flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap cursor-pointer bg-sky-600 text-white shadow-xs"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+              <span>শিক্ষক পরিষদ</span>
+              <span id="badge-teachers-count" class="bg-white/20 text-white text-[11px] px-2 py-0.5 rounded-full font-sans">0</span>
+            </button>
+
+            <button
+              type="button"
+              id="tab-btn-students"
+              class="admin-tab-btn flex items-center gap-2 px-3.5 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap cursor-pointer text-slate-300 hover:text-white hover:bg-white/5"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+              <span>সাফল্যের শিক্ষার্থী</span>
+              <span id="badge-students-count" class="bg-white/10 text-slate-300 text-[11px] px-2 py-0.5 rounded-full font-sans">0</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN CONTENT CONTAINER -->
+      <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 space-y-6">
+
+        <!-- ======================================================== -->
+        <!-- TAB 1: TEACHER MANAGEMENT -->
+        <!-- ======================================================== -->
+        <section id="panel-teachers" class="space-y-6">
+          
+          <!-- Header & Controls -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-[#0b1d3a]">শিক্ষক পরিষদ ব্যবস্থাপনা</h2>
+              <p class="text-slate-500 text-xs sm:text-sm mt-0.5">কুষ্টিয়া কেন্দ্রীয় ক্যাম্পাসের সম্মানিত শিক্ষকদের তথ্য সংযোজন ও পরিচালনা করুন।</p>
+            </div>
+
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <button
+                type="button"
+                id="btn-open-teacher-modal"
+                class="min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 active:scale-95 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 transition shadow-sm cursor-pointer"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                <span>নতুন শিক্ষক যুক্ত করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Faculty Filter Bar -->
+          <div class="flex items-center gap-1.5 sm:gap-2 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs overflow-x-auto scrollbar-none">
+            <span class="text-xs font-semibold text-slate-500 pl-2 shrink-0 hidden sm:inline">অনুষদ ফিল্টার:</span>
+            <button type="button" data-teacher-filter="all" class="teacher-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 bg-[#0b1d3a] text-white">সব শিক্ষক</button>
+            <button type="button" data-teacher-filter="science" class="teacher-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 text-slate-600 hover:text-sky-600 hover:bg-slate-100">বিজ্ঞান অনুষদ</button>
+            <button type="button" data-teacher-filter="humanities" class="teacher-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 text-slate-600 hover:text-sky-600 hover:bg-slate-100">মানবিক অনুষদ</button>
+            <button type="button" data-teacher-filter="commerce" class="teacher-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 text-slate-600 hover:text-sky-600 hover:bg-slate-100">ব্যবসায় শিক্ষা</button>
+          </div>
+
+          <!-- Teachers Grid -->
+          <div id="admin-teachers-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <!-- Populated via admin.js -->
+          </div>
+
+          <!-- Empty state -->
+          <div id="admin-teachers-empty" class="hidden bg-white rounded-2xl border border-slate-200 p-12 text-center">
+            <div class="w-16 h-16 mx-auto mb-3 text-slate-300">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </div>
+            <p class="text-slate-600 font-bold text-base">কোনো শিক্ষকের তথ্য পাওয়া যায়নি</p>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">"নতুন শিক্ষক যুক্ত করুন" বাটনে ক্লিক করে শিক্ষকের তথ্য সংযোজন করুন।</p>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- TAB 2: ACHIEVEMENT STUDENT MANAGEMENT -->
+        <!-- ======================================================== -->
+        <section id="panel-students" class="hidden space-y-6">
+          
+          <!-- Header & Controls -->
+          <div class="bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-bold text-[#0b1d3a]">সাফল্যের শিক্ষার্থী ব্যবস্থাপনা</h2>
+              <p class="text-slate-500 text-xs sm:text-sm mt-0.5">বিশ্ববিদ্যালয়ে চান্সপ্রাপ্ত শিক্ষার্থীদের তথ্য ও ছবি হালনাগাদ করুন।</p>
+            </div>
+
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <button
+                type="button"
+                id="btn-open-student-modal"
+                class="min-h-[44px] px-4 sm:px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 active:scale-95 text-white font-semibold text-xs sm:text-sm flex items-center gap-2 transition shadow-sm cursor-pointer"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+                <span>নতুন শিক্ষার্থী যুক্ত করুন</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Faculty Filter Bar for Students -->
+          <div class="flex items-center gap-1.5 sm:gap-2 bg-white p-2 rounded-2xl border border-slate-200 shadow-xs overflow-x-auto scrollbar-none">
+            <span class="text-xs font-semibold text-slate-500 pl-2 shrink-0 hidden sm:inline">অনুষদ ফিল্টার:</span>
+            <button type="button" data-student-filter="all" class="student-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 bg-[#0b1d3a] text-white">সকল শিক্ষার্থী</button>
+            <button type="button" data-student-filter="science" class="student-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 text-slate-600 hover:text-sky-600 hover:bg-slate-100">বিজ্ঞান অনুষদ</button>
+            <button type="button" data-student-filter="humanities" class="student-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 text-slate-600 hover:text-sky-600 hover:bg-slate-100">মানবিক অনুষদ</button>
+            <button type="button" data-student-filter="commerce" class="student-filter-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition cursor-pointer whitespace-nowrap shrink-0 text-slate-600 hover:text-sky-600 hover:bg-slate-100">ব্যবসায় শিক্ষা</button>
+          </div>
+
+          <!-- Students Grid (Card Style for Mobile & Desktop) -->
+          <div id="admin-students-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+            <!-- Populated via admin.js -->
+          </div>
+
+          <!-- Empty state -->
+          <div id="admin-students-empty" class="hidden bg-white rounded-2xl border border-slate-200 p-12 text-center">
+            <div class="w-16 h-16 mx-auto mb-3 text-slate-300">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+            </div>
+            <p class="text-slate-600 font-bold text-base">কোনো শিক্ষার্থীর তথ্য পাওয়া যায়নি</p>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1">"নতুন শিক্ষার্থী যুক্ত করুন" বাটনে ক্লিক করে তথ্য সংরক্ষণ করুন।</p>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 3. TEACHER FORM MODAL (ADD / EDIT) -->
+    <!-- ======================================================== -->
+    <div id="modal-teacher" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs overflow-y-auto">
+      <div class="bg-white rounded-3xl max-w-xl w-full p-5 sm:p-7 border border-slate-200 shadow-2xl relative my-auto animate-fadeIn max-h-[92vh] overflow-y-auto custom-scrollbar">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+          <div>
+            <h3 id="teacher-modal-title" class="text-lg sm:text-xl font-bold text-[#0b1d3a]">নতুন শিক্ষক যুক্ত করুন</h3>
+            <p class="text-xs text-slate-500">সকল তথ্য যথাযথভাবে পূরণ করুন।</p>
+          </div>
+          <button type="button" onclick="window.closeTeacherModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form id="teacher-form" class="space-y-4">
+          <input type="hidden" id="teacher-edit-id" value="" />
+
+          <!-- Name -->
+          <div>
+            <label for="teacher-name" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              শিক্ষকের নাম <span class="text-rose-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="teacher-name"
+              required
+              placeholder="যেমন: মোঃ সোহানুর রহমান (সোহান)"
+              class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+            />
+          </div>
+
+          <!-- Faculty & Subject Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label for="teacher-faculty" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+                অনুষদ / শাখা <span class="text-rose-500">*</span>
+              </label>
+              <select
+                id="teacher-faculty"
+                required
+                class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm bg-white"
+              >
+                <option value="science">বিজ্ঞান অনুষদ (Science)</option>
+                <option value="humanities">মানবিক অনুষদ (Humanities)</option>
+                <option value="commerce">ব্যবসায় শিক্ষা (Commerce)</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="teacher-instructor" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+                ইন্সট্রাক্টর / বিষয় <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="teacher-instructor"
+                required
+                placeholder="যেমন: রসায়ন, উচ্চতর গণিত"
+                class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+              />
+            </div>
+          </div>
+
+          <!-- Designation & Experience Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div>
+              <label for="teacher-designation" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+                পদবি / পরিচয় <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="teacher-designation"
+                required
+                placeholder="যেমন: পরিচালক, সোহান'স কোচিং"
+                class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+              />
+            </div>
+
+            <div>
+              <label for="teacher-experience" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+                অভিজ্ঞতা <span class="text-rose-500">*</span>
+              </label>
+              <input
+                type="text"
+                id="teacher-experience"
+                required
+                placeholder="যেমন: ১০ বছর"
+                class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+              />
+            </div>
+          </div>
+
+          <!-- Qualification -->
+          <div>
+            <label for="teacher-qualification" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              শিক্ষাগত যোগ্যতা <span class="text-rose-500">*</span>
+            </label>
+            <textarea
+              id="teacher-qualification"
+              required
+              rows="2"
+              placeholder="যেমন: বি এস সি ( অনার্স ), এম এস সি, ইসলামী বিশ্ববিদ্যালয়"
+              class="w-full px-3.5 py-2 min-h-[50px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+            ></textarea>
+          </div>
+
+          <!-- Photo Upload with Preview -->
+          <div>
+            <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              শিক্ষকের ছবি <span class="text-rose-500">*</span>
+              <span class="text-slate-400 font-normal text-xs">(JPG, PNG, WEBP — সর্বোচ্চ ২ মেগাবাইট)</span>
+            </label>
+
+            <div class="flex items-center gap-4">
+              <!-- Live Preview Thumbnail -->
+              <div id="teacher-photo-preview-box" class="w-20 h-24 rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden shrink-0 relative group">
+                <img id="teacher-photo-preview-img" src="" alt="প্রিভিউ" class="hidden w-full h-full object-cover object-top" />
+                <span id="teacher-photo-placeholder" class="text-slate-400 text-center text-[10px] p-1 font-sans">No Image</span>
+              </div>
+
+              <!-- Input -->
+              <div class="flex-1">
+                <input
+                  type="file"
+                  id="teacher-photo-input"
+                  accept="image/jpeg,image/png,image/webp"
+                  class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100 cursor-pointer"
+                />
+                <p id="teacher-photo-hint" class="text-[11px] text-slate-400 mt-1">প্রয়োজনে স্বয়ংক্রিয়ভাবে কম্প্রেস ও রিসাইজ করা হবে।</p>
+                <input type="hidden" id="teacher-existing-image-url" value="" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+            <button
+              type="button"
+              onclick="window.closeTeacherModal()"
+              class="min-h-[44px] px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition cursor-pointer"
+            >
+              বাতিল
+            </button>
+            <button
+              type="submit"
+              id="teacher-save-btn"
+              class="min-h-[44px] px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 active:scale-95 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 cursor-pointer shadow-sm"
+            >
+              <span id="teacher-save-text">সংরক্ষণ করুন</span>
+              <span id="teacher-save-spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 4. STUDENT FORM MODAL (ADD / EDIT) -->
+    <!-- ======================================================== -->
+    <div id="modal-student" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs overflow-y-auto">
+      <div class="bg-white rounded-3xl max-w-xl w-full p-5 sm:p-7 border border-slate-200 shadow-2xl relative my-auto animate-fadeIn max-h-[92vh] overflow-y-auto custom-scrollbar">
+        
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+          <div>
+            <h3 id="student-modal-title" class="text-lg sm:text-xl font-bold text-[#0b1d3a]">নতুন শিক্ষার্থী যুক্ত করুন</h3>
+            <p class="text-xs text-slate-500">চান্সপ্রাপ্ত শিক্ষার্থীর বিস্তারিত তথ্য প্রদান করুন।</p>
+          </div>
+          <button type="button" onclick="window.closeStudentModal()" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 cursor-pointer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form id="student-form" class="space-y-4">
+          <input type="hidden" id="student-edit-id" value="" />
+
+          <!-- Name -->
+          <div>
+            <label for="student-name" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              শিক্ষার্থীর নাম <span class="text-rose-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="student-name"
+              required
+              placeholder="যেমন: ছাবরিন সুলতানা"
+              class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+            />
+          </div>
+
+          <!-- Faculty -->
+          <div>
+            <label for="student-faculty" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              অনুষদ / শাখা <span class="text-rose-500">*</span>
+            </label>
+            <select
+              id="student-faculty"
+              required
+              class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm bg-white"
+            >
+              <option value="science">বিজ্ঞান অনুষদ (Science)</option>
+              <option value="humanities">মানবিক অনুষদ (Humanities / Law)</option>
+              <option value="commerce">ব্যবসায় শিক্ষা (Commerce)</option>
+            </select>
+          </div>
+
+          <!-- University Dropdown + Other Input -->
+          <div>
+            <label for="student-uni-select-input" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              চান্সপ্রাপ্ত বিশ্ববিদ্যালয় <span class="text-rose-500">*</span>
+            </label>
+            <select
+              id="student-uni-select-input"
+              required
+              class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm bg-white"
+            >
+              <option value="ঢাকা বিশ্ববিদ্যালয় (ঢাবি)">ঢাকা বিশ্ববিদ্যালয় (ঢাবি)</option>
+              <option value="রাজশাহী বিশ্ববিদ্যালয় (রাবি)">রাজশাহী বিশ্ববিদ্যালয় (রাবি)</option>
+              <option value="জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (জাবি)">জাহাঙ্গীরনগর বিশ্ববিদ্যালয় (জাবি)</option>
+              <option value="চট্টগ্রাম বিশ্ববিদ্যালয় (চবি)">চট্টগ্রাম বিশ্ববিদ্যালয় (চবি)</option>
+              <option value="বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (বুয়েট)">বাংলাদেশ প্রকৌশল বিশ্ববিদ্যালয় (বুয়েট)</option>
+              <option value="কুয়েট / রুয়েট / চুয়েট">কুয়েট / রুয়েট / চুয়েট (প্রকৌশল গুচ্ছ)</option>
+              <option value="মেডিকেল কলেজ">মেডিকেল কলেজ (এমবিবিএস)</option>
+              <option value="খুলনা বিশ্ববিদ্যালয় (খুবি)">খুলনা বিশ্ববিদ্যালয় (খুবি)</option>
+              <option value="ইসলামী বিশ্ববিদ্যালয় (ইবি)">ইসলামী বিশ্ববিদ্যালয় (ইবি)</option>
+              <option value="শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (শাবিপ্রবি)">শাহজালাল বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয় (শাবিপ্রবি)</option>
+              <option value="গুচ্ছভুক্ত বিশ্ববিদ্যালয় (GST)">গুচ্ছভুক্ত বিশ্ববিদ্যালয় (GST)</option>
+              <option value="কুষ্টিয়া সরকারি কলেজ">কুষ্টিয়া সরকারি কলেজ</option>
+              <option value="other">অন্যান্য (নতুন বিশ্ববিদ্যালয়ের নাম লিখুন)</option>
+            </select>
+
+            <!-- Custom Other University Input (Conditional) -->
+            <div id="student-uni-other-wrapper" class="hidden mt-2">
+              <input
+                type="text"
+                id="student-uni-other-input"
+                placeholder="বিশ্ববিদ্যালয়ের সঠিক নাম লিখুন"
+                class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-amber-300 bg-amber-50/40 focus:outline-none focus:border-amber-600 focus:ring-1 focus:ring-amber-500 text-sm"
+              />
+            </div>
+          </div>
+
+          <!-- Department -->
+          <div>
+            <label for="student-department" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              বিভাগ / বিষয় <span class="text-rose-500">*</span>
+            </label>
+            <input
+              type="text"
+              id="student-department"
+              required
+              placeholder="যেমন: আইন বিভাগ / গণিত বিভাগ / সিভিল ইঞ্জিনিয়ারিং"
+              class="w-full px-3.5 py-2.5 min-h-[44px] rounded-xl border border-slate-300 focus:outline-none focus:border-sky-600 focus:ring-1 focus:ring-sky-600 text-sm"
+            />
+          </div>
+
+          <!-- Photo Upload with Preview -->
+          <div>
+            <label class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
+              শিক্ষার্থীর ছবি <span class="text-rose-500">*</span>
+              <span class="text-slate-400 font-normal text-xs">(JPG, PNG, WEBP — সর্বোচ্চ ২ মেগাবাইট)</span>
+            </label>
+
+            <div class="flex items-center gap-4">
+              <!-- Live Preview Thumbnail -->
+              <div id="student-photo-preview-box" class="w-20 h-24 rounded-xl bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden shrink-0 relative group">
+                <img id="student-photo-preview-img" src="" alt="প্রিভিউ" class="hidden w-full h-full object-cover object-top" />
+                <span id="student-photo-placeholder" class="text-slate-400 text-center text-[10px] p-1 font-sans">No Image</span>
+              </div>
+
+              <!-- Input -->
+              <div class="flex-1">
+                <input
+                  type="file"
+                  id="student-photo-input"
+                  accept="image/jpeg,image/png,image/webp"
+                  class="block w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100 cursor-pointer"
+                />
+                <p id="student-photo-hint" class="text-[11px] text-slate-400 mt-1">প্রয়োজনে স্বয়ংক্রিয়ভাবে অপ্টিমাইজ করা হবে।</p>
+                <input type="hidden" id="student-existing-image-url" value="" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+            <button
+              type="button"
+              onclick="window.closeStudentModal()"
+              class="min-h-[44px] px-4 py-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 text-xs sm:text-sm font-semibold transition cursor-pointer"
+            >
+              বাতিল
+            </button>
+            <button
+              type="submit"
+              id="student-save-btn"
+              class="min-h-[44px] px-5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 active:scale-95 text-white text-xs sm:text-sm font-semibold transition flex items-center gap-2 cursor-pointer shadow-sm"
+            >
+              <span id="student-save-text">সংরক্ষণ করুন</span>
+              <span id="student-save-spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 5. CONFIRM DELETE MODAL -->
+    <!-- ======================================================== -->
+    <div id="modal-confirm-delete" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+      <div class="bg-white rounded-3xl max-w-sm w-full p-6 border border-slate-200 shadow-2xl text-center animate-fadeIn">
+        <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 border border-rose-100 mx-auto flex items-center justify-center mb-4">
+          <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+        <h4 id="delete-modal-title" class="text-lg font-bold text-slate-900 mb-1">মুছে ফেলার নিশ্চিতকরণ</h4>
+        <p id="delete-modal-desc" class="text-xs sm:text-sm text-slate-500 leading-relaxed mb-6">আপনি কি নিশ্চিতভাবে এই তথ্যটি মুছে ফেলতে চান? এটি একবার মুছে ফেললে আর পুনরুদ্ধার করা যাবে না।</p>
+
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            id="delete-cancel-btn"
+            class="flex-1 min-h-[44px] py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-xs sm:text-sm transition cursor-pointer"
+          >
+            বাতিল
+          </button>
+          <button
+            type="button"
+            id="delete-confirm-btn"
+            class="flex-1 min-h-[44px] py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 active:scale-95 text-white font-semibold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
+          >
+            <span id="delete-confirm-text">হ্যাঁ, মুছে ফেলুন</span>
+            <span id="delete-confirm-spinner" class="hidden w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden canvas for browser-side image resize & compression -->
+    <canvas id="compression-canvas" class="hidden"></canvas>
+
+    <!-- ADMIN JS MODULE -->
+    <script type="module" src="/src/admin.js"></script>
+  </body>
+</html>

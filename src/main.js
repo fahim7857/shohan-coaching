@@ -254,6 +254,11 @@ let currentFacultyFilter = 'all';
 let currentStudentSearch = '';
 let currentStudentUni = 'all';
 let currentStudentDept = 'all';
+let currentStudentFaculty = 'all';
+
+// Dynamic data caches with fallback to hard-coded arrays
+export let activeTeachers = [...TEACHERS_DATA];
+export let activeStudents = [...STUDENTS_DATA];
 
 // Gallery state
 let currentGalleryFilter = 'all';
@@ -273,7 +278,7 @@ export function navigateTo(pageId) {
   const targetFile = pageId === 'home' ? '/index.html' : `/${pageId}.html`;
   const currentPath = window.location.pathname;
   const isCurrent = (pageId === 'home' && (currentPath === '/' || currentPath.endsWith('/index.html'))) ||
-                    (pageId !== 'home' && currentPath.endsWith(`/${pageId}.html`));
+    (pageId !== 'home' && currentPath.endsWith(`/${pageId}.html`));
 
   if (!isCurrent) {
     window.location.href = targetFile;
@@ -331,7 +336,7 @@ export function renderTeachers() {
   const container = document.getElementById('teachers-grid');
   if (!container) return;
 
-  const filtered = TEACHERS_DATA.filter(t => {
+  const filtered = activeTeachers.filter(t => {
     if (currentFacultyFilter === 'all') return true;
     return t.faculty === currentFacultyFilter;
   });
@@ -343,6 +348,7 @@ export function renderTeachers() {
           src="${teacher.image}"
           alt="${teacher.name}"
           class="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-300"
+          loading="lazy"
         />
       </div>
 
@@ -393,7 +399,7 @@ export function renderStudents() {
   const emptyState = document.getElementById('students-empty');
   if (!container) return;
 
-  const filtered = STUDENTS_DATA.filter(s => {
+  const filtered = activeStudents.filter(s => {
     const matchesSearch =
       s.name.toLowerCase().includes(currentStudentSearch.toLowerCase()) ||
       s.university.toLowerCase().includes(currentStudentSearch.toLowerCase()) ||
@@ -401,8 +407,9 @@ export function renderStudents() {
 
     const matchesUni = currentStudentUni === 'all' || s.university.includes(currentStudentUni);
     const matchesDept = currentStudentDept === 'all' || s.department.includes(currentStudentDept);
+    const matchesFaculty = currentStudentFaculty === 'all' || s.faculty === currentStudentFaculty;
 
-    return matchesSearch && matchesUni && matchesDept;
+    return matchesSearch && matchesUni && matchesDept && matchesFaculty;
   });
 
   if (filtered.length === 0) {
@@ -414,33 +421,107 @@ export function renderStudents() {
   if (emptyState) emptyState.classList.add('hidden');
 
   container.innerHTML = filtered.map(student => `
-    <div class="bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group">
-      <div class="relative bg-white aspect-[4/4.8] overflow-hidden border-b border-slate-200">
+    <div class="student-success-card bg-slate-50 rounded-lg sm:rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group min-w-0">
+      <div class="relative bg-white aspect-square sm:aspect-[4/4.8] overflow-hidden border-b border-slate-200">
         <img
           src="${student.image}"
           alt="${student.name}"
           class="w-full h-full object-cover object-top group-hover:scale-102 transition-transform duration-300"
+          loading="lazy"
         />
       </div>
 
-      <div class="p-5 space-y-2.5 text-sm font-bn">
-        <div class="flex items-start gap-1.5">
-          <span class="font-bold text-slate-800 shrink-0">নাম:</span>
-          <span class="text-slate-900 font-semibold">${student.name}</span>
+      <div class="student-info p-1 sm:p-5 space-y-0.5 sm:space-y-2.5 text-[8px] sm:text-sm leading-tight font-bn text-center sm:text-left">
+        <!-- নাম -->
+        <div class="font-bold text-slate-900 leading-tight sm:flex sm:items-start sm:gap-1.5">
+          <span class="hidden sm:inline font-bold text-slate-800 shrink-0">নাম:</span>
+          <span class="text-slate-900 font-semibold break-words">${student.name}</span>
         </div>
 
-        <div class="flex items-start gap-1.5">
-          <span class="font-bold text-slate-800 shrink-0">বিশ্ববিদ্যালয়:</span>
-          <span class="text-[#0284c7] font-semibold">${student.university}</span>
+        <!-- বিশ্ববিদ্যালয় (মোবাইলে শুধু এটাই দেখাবে) -->
+        <div class="text-[#0284c7] font-semibold sm:flex sm:items-start sm:gap-1.5">
+          <span class="hidden sm:inline font-bold text-slate-800 shrink-0">বিশ্ববিদ্যালয়:</span>
+          <span class="sm:text-[#0284c7] break-words">${student.university}</span>
         </div>
 
-        <div class="flex items-start gap-1.5">
+        <!-- বিভাগ (শুধু ট্যাবলেট/ডেস্কটপে) -->
+        <div class="hidden sm:flex items-start gap-1.5">
           <span class="font-bold text-slate-800 shrink-0">বিভাগ:</span>
           <span class="text-slate-700">${student.department}</span>
         </div>
       </div>
     </div>
   `).join('');
+}
+
+// Dynamic Filter Population for Students Page
+export function populateStudentFilters(students) {
+  const uniSelect = document.getElementById('student-uni-select');
+  const deptSelect = document.getElementById('student-dept-select');
+
+  if (uniSelect) {
+    const prevUni = currentStudentUni;
+    const universities = [...new Set(students.map(s => s.university).filter(Boolean))].sort();
+    let uniHtml = '<option value="all">সকল বিশ্ববিদ্যালয়</option>';
+    universities.forEach(u => {
+      uniHtml += `<option value="${u}">${u}</option>`;
+    });
+    uniSelect.innerHTML = uniHtml;
+    if (prevUni && (prevUni === 'all' || universities.includes(prevUni))) {
+      uniSelect.value = prevUni;
+    }
+  }
+
+  if (deptSelect) {
+    const prevDept = currentStudentDept;
+    const departments = [...new Set(students.map(s => s.department).filter(Boolean))].sort();
+    let deptHtml = '<option value="all">সকল বিভাগ</option>';
+    departments.forEach(d => {
+      deptHtml += `<option value="${d}">${d}</option>`;
+    });
+    deptSelect.innerHTML = deptHtml;
+    if (prevDept && (prevDept === 'all' || departments.includes(prevDept))) {
+      deptSelect.value = prevDept;
+    }
+  }
+}
+
+// API Loaders with Graceful Fallback
+export async function loadTeachers() {
+  const container = document.getElementById('teachers-grid');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/teachers');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        activeTeachers = data;
+      }
+    }
+  } catch (err) {
+    console.warn('API connection unavailable, loaded static fallback teachers:', err);
+  } finally {
+    renderTeachers();
+  }
+}
+
+export async function loadStudents() {
+  const container = document.getElementById('students-grid');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/students');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        activeStudents = data;
+      }
+    }
+  } catch (err) {
+    console.warn('API connection unavailable, loaded static fallback students:', err);
+  } finally {
+    populateStudentFilters(activeStudents);
+    renderStudents();
+  }
 }
 
 // 7. GALLERY SLIDER CONTROLLER
@@ -476,9 +557,8 @@ export function updateGallerySlider() {
       <button
         type="button"
         onclick="window.goToGallerySlide(${idx})"
-        class="h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${
-          activeGalleryIndex === idx ? 'bg-sky-400 w-4 sm:w-6' : 'bg-white/50 w-1.5 sm:w-2 hover:bg-white'
-        }"
+        class="h-1.5 sm:h-2 rounded-full transition-all cursor-pointer ${activeGalleryIndex === idx ? 'bg-sky-400 w-4 sm:w-6' : 'bg-white/50 w-1.5 sm:w-2 hover:bg-white'
+      }"
         aria-label="Slide ${idx + 1}"
       ></button>
     `).join('');
@@ -530,11 +610,10 @@ export function renderGallery() {
       <button
         type="button"
         onclick="window.goToGallerySlide(${idx})"
-        class="gallery-thumb-btn relative rounded-xl overflow-hidden shrink-0 w-24 sm:w-auto aspect-[4/3] border-2 transition-all cursor-pointer group ${
-          activeGalleryIndex === idx
-            ? 'border-[#0284c7] ring-2 ring-sky-300 scale-102 shadow-md'
-            : 'border-slate-200 hover:border-sky-400 opacity-70 hover:opacity-100'
-        }"
+        class="gallery-thumb-btn relative rounded-xl overflow-hidden shrink-0 w-24 sm:w-auto aspect-[4/3] border-2 transition-all cursor-pointer group ${activeGalleryIndex === idx
+        ? 'border-[#0284c7] ring-2 ring-sky-300 scale-102 shadow-md'
+        : 'border-slate-200 hover:border-sky-400 opacity-70 hover:opacity-100'
+      }"
       >
         <img
           src="${item.image}"
@@ -806,6 +885,10 @@ window.prevGallerySlide = prevGallerySlide;
 window.goToGallerySlide = goToGallerySlide;
 window.setGalleryFilter = setGalleryFilter;
 window.toggleGalleryAutoplay = toggleGalleryAutoplay;
+window.loadTeachers = loadTeachers;
+window.loadStudents = loadStudents;
+window.renderTeachers = renderTeachers;
+window.renderStudents = renderStudents;
 window.openCurrentSlideLightbox = () => {
   const items = getFilteredGalleryItems();
   const current = items[activeGalleryIndex] || items[0];
@@ -826,10 +909,19 @@ function initializeApp() {
     }
   }
 
-  // Render dynamic data if elements exist on current page
-  renderTeachers();
-  renderStudents();
+  // Load dynamic data from API (with instant static fallback)
+  loadTeachers();
+  loadStudents();
   renderGallery();
+
+  // Student Faculty Filter Listener
+  const facultySelect = document.getElementById('student-faculty-select');
+  if (facultySelect) {
+    facultySelect.addEventListener('change', (e) => {
+      currentStudentFaculty = e.target.value;
+      renderStudents();
+    });
+  }
 
   // Student Search Listener
   const searchInput = document.getElementById('student-search-input');

@@ -1,0 +1,62 @@
+[
+  {
+    "id": "teacher-anu",
+    "name": "আনোয়ার হোসেন অনু",
+    "designation": "পরিচালক, সোহান'স কোচিং",
+    "qualification": "বি এস সি ( অনার্স ), এম এস সি ( ANFT ), ইসলামী বিশ্ববিদ্যালয়",
+    "instructor": "রসায়ন",
+    "experience": "১৪ বছর",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCCnkHiORk7U75tu-qMuyjnGWZeH-lw3XzlhUF3nUDATpkbunEvY_1UjpRsEwazyKvZ2GN4rUOPuKdMbvU3yCPTJNhm2U68UfXd84t4vD3p6NSUdqe8UM4z2yNK9laMfBHPYWncAidwCxn1HV7Zf4jM3Ywu4G3NeSz8ue4gWHIZhqeEd_g-cfeddbV_o6uOpUrM7Y4lGWSkW-akSIQaBlAqHVlJXkc5XVyZ9OxRno7QeufPtMuuj2e3ww-PqdwQ57yjOw",
+    "faculty": "science"
+  },
+  {
+    "id": "teacher-shohan",
+    "name": "মোঃ সোহানুর রহমান (সোহান)",
+    "designation": "পরিচালক, সোহান'স কোচিং",
+    "qualification": "বি এস সি ( অনার্স ), এম এস সি, ইসলামী বিশ্ববিদ্যালয়",
+    "instructor": "রসায়ন",
+    "experience": "১০ বছর",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC9a8qIypA6yxaqvHCF7aSi9H2Mof7oLDArwpjOT0xGZK-CfFFlnKts3337w1CcmkTPhUeAqK02pzLGV9DZ7YTZpluTeUNYKwsPTzIBIq04sWeHahqgG-8F2Nv6ih1ipLu8L9aX1vRIiMWIDxEQRHXMkJyr5hGRDZ-KA_2REZ_FDu46ifcc66-bjYKRGoEtA9ZwqLNuq-I5N0ey6CCKVg5r1tg4cKT2A8FY3Ktro4HpGvYFIdwjhIFcuxnCGpxm5kl4Tg",
+    "faculty": "science"
+  },
+  {
+    "id": "teacher-sayeed",
+    "name": "মোঃ সাঈদ হোসেন",
+    "designation": "শিক্ষক, সোহান'স কোচিং",
+    "qualification": "বি এস সি ( অনার্স ), এম এস সি ( প্রাণিবিজ্ঞান ), রাজশাহী বিশ্ববিদ্যালয়",
+    "instructor": "জীববিজ্ঞান",
+    "experience": "৮ বছর",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC6sPU2MvS2s0s54jzOvOGsEsygPGlJtq9WBzU2vuTRm1pYliPeEDbCJqPcDq7DOsC6hQm0gljlnMuuIy1NM-p2A1Xtl8HJko55O6ZgeSd2LWFyHx5CZzCmXkcIHiYxwQeh_Mjk_8tMfsHlVIKtMEUNiN3x8lUS_eQRJ71yBua_cTy1mlqABVzhhhjh_7R5C7NCHnAHArmwi36D6hrelThDuRbDApYtcqFkye0CWCnHrv7uz0CWhqrhCKf0lPIJVGMNDw",
+    "faculty": "science"
+  },
+  {
+    "id": "teacher-ruhul",
+    "name": "রুহুল আমিন",
+    "designation": "শিক্ষক, সোহান'স কোচিং",
+    "qualification": "বি এ ( অনার্স ), এম এ ( ইংরেজি ), ইসলামী বিশ্ববিদ্যালয়",
+    "instructor": "ইংরেজি ও সাধারণ জ্ঞান",
+    "experience": "৭ বছর",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAzIHIFEPYoHicZ7WtWaciV2icTK2WeeCvbqBMspMwgcUGIDS2FlrKlCtFPQwD2tCqBbZ_55v0YHbiW3zZxUReJyW7nUAVks6ie1JzVBHHTLCxdkec-2L4RYniOG8dqwFb6w17PHTl0l7ed5t5wAjyrhdX8-iPHKi5c43E7OUT1iZboGdyGQb5gm-4WHlVmk-qjr1Gu4tRxUwcvVRQVonDzdoXbY6vGu0u8oFL79A27q7KG7UaOcUE3G72rL9zigMq3Zw",
+    "faculty": "humanities"
+  },
+  {
+    "id": "teacher-hosen-ali",
+    "name": "হোসেন আলী",
+    "designation": "শিক্ষক, সোহান'স কোচিং",
+    "qualification": "বি বি এ, এম বি এ ( অ্যাকাউন্টিং অ্যান্ড ইনফরমেশন সিস্টেমস ), ইসলামী বিশ্ববিদ্যালয়",
+    "instructor": "হিসাববিজ্ঞান ও ব্যবসায় শিক্ষা",
+    "experience": "৬ বছর",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAso7Q4je7rZElWviMybOgqnb8IFtLaMbK28BpY-ziRA0ok0B7dougfoGP-L0ukxePC4JiI8E9XUlSxPHyoEn51OoaCKwF-wsraP-sMg5eXHVPhY4FPBkz62aAIcjuV9aRjLAM7ZrwNNlc50CG78hirAxMtJwhSobKCcKCqKW2GcyWkz4LUYHImDaJbN0awQgOAp0B-dzJg70o71rM1NoxF5Mb2uCq2QR6QvNOaNaA2l0rRiMjZoJEW8zHetvI9HFac-g",
+    "faculty": "commerce"
+  },
+  {
+    "id": "teacher-apon",
+    "name": "মোঃ আপন হোসেন",
+    "designation": "শিক্ষক, সোহান'স কোচিং",
+    "qualification": "বি এস সি ইঞ্জিনিয়ারিং ( সিভিল ), কুয়েট",
+    "instructor": "উচ্চতর গণিত ও পদার্থবিজ্ঞান",
+    "experience": "৭ বছর",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD36Vrn7zOaX_NOsv_Bu8yIVZA3m-LpXyujac12mYcRNLSmu_DEd2FKPeohMmd-iWYeUHmy4xJlkoFomGFxGBv_LouCZH4h7LPeKNuIIhCKIAwMqRjK0Z54hlJfRIBu7JUusMaL1G4fxZDG5YBSVG07Vg27dTMHQcymtW4P0eQd7z-1gjdyZ6GYgnDgUqZj96dQlL-OLTJzQRtQaP09-cFXOKj2hU2WzDeVNPD14foyUCHbN7VInJW-sdraDg-BHp7rpg",
+    "faculty": "science"
+  }
+]

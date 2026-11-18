@@ -18,3 +18,21 @@
   border-color: #0284c7;
   box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
 }
+
+/* Mobile: 4 compact cards per row */
+@media (max-width: 639px) {
+  #students-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    align-items: start;
+  }
+
+  .student-success-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .student-success-card:hover img {
+    transform: none;
+  }
+}
